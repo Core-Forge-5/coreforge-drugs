@@ -33,15 +33,15 @@ Add a completely new drug with unique steps, locations, animations, and props in
 
 ## Installation
 
-1. Download from your cfx portal and place inside your `resources` folder
+1. Download from your cfx portal and place inside your `resources` folder 
 
-2. Import the SQL file into your database
+2. Download [glitch-minigames](https://github.com/Gl1tchStudios/glitch-minigames) and place inside your `resources` folder
+
+3. Import the SQL file into your database
 
 ```bash
 mysql -u root -p your_database < core_drugs.sql
 ```
-
-3. Download [glitch-minigames](https://github.com/Gl1tchStudios/glitch-minigames)
 
 4. Add the resource to your `server.cfg`
 
