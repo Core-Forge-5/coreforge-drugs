@@ -33,28 +33,26 @@ Add a completely new drug with unique steps, locations, animations, and props in
 
 ## Installation
 
-1. Download or clone the resource into your server's `resources` folder
-
-```bash
-cd resources
-git clone https://github.com/Core-Forge-5/core-drugs
-```
+1. Download from your cfx portal and place inside your `resources` folder
 
 2. Import the SQL file into your database
 
 ```bash
-mysql -u root -p your_database < core-drugs.sql
+mysql -u root -p your_database < core_drugs.sql
 ```
 
-3. Add the resource to your `server.cfg`
+3. Download [glitch-minigames](https://github.com/Gl1tchStudios/glitch-minigames)
+
+4. Add the resource to your `server.cfg`
 
 ```
+ensure glitch-minigames
 ensure core-drugs
 ```
 
-4. Configure the resource to match your server — see [Configuration](#configuration)
+5. Configure the resource to match your server — see [Configuration](#configuration)
 
-5. Restart your server or run `refresh` then `ensure core-drugs` in the console
+6. Restart your server or run `refresh` then `ensure glitch-minigames` `ensure core-drugs` in the console
 
 ---
 
@@ -92,6 +90,44 @@ Config.LabFail = {
     RagdollTime = 6000,
     LabFailCooldown = 10000
 }
+```
+
+### Lab Minigame Settings
+Lab minigames are optional and can be turned off or use any minigame pack for fivem.
+Script is preconfigured to use glitch-minigames https://github.com/Gl1tchStudios/glitch-minigames
+```lua
+--/editable/client/minigames.lua
+-- This is what it's already preconfigured to use.
+--minigamePrecursor
+RegisterNetEvent("rs-drugs:client:minigamePrecursor", function(drugName, stepIndex)
+    local success = exports['glitch-minigames']:StartAimTestGame(15000, 5, 1500, 60, true, 2, 0)
+    -- Parameters: timeLimit, targetsToHit, targetLifetime, targetSize, shrinkTarget, maxMisses, timePenalty
+    -- Defaults: 30000, 10, 1500, 60, true, 5, 0
+    if success then
+        notifySuccess()
+        TriggerEvent("rs-drugs:client:minigamePrecursorPart2", drugName, stepIndex)
+    else
+        notifyFail()
+        if Config.LabFail.Explosion == true then
+            TriggerServerEvent("rs-drugs:server:resolveLabFail", drugName, stepIndex)
+        end
+    end
+end)
+RegisterNetEvent("rs-drugs:client:minigamePrecursorPart2", function(drugName, stepIndex)
+    Wait(100)
+    local success = exports['glitch-minigames']:StartBalanceGame(10000, 8, 12, 18, 20, 2, 1000)
+    -- Parameters: timeLimit, driftSpeed, sensitivity, greenZoneWidth, yellowZoneWidth, driftRandomness, maxDangerTime
+    -- Defaults: 10000, 3, 8, 30, 25, 2, 1000
+    if success then
+        notifySuccess()
+        TriggerServerEvent("rs-drugs:server:attemptLabStep", drugName, stepIndex)
+    else
+        notifyFail()
+        if Config.LabFail.Explosion == true then
+            TriggerServerEvent("rs-drugs:server:resolveLabFail", drugName, stepIndex)
+        end
+    end
+end)
 ```
 
 ### Precursor Settings
