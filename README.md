@@ -20,6 +20,8 @@ Core-Forge Drug Empire is a config-driven multi-drug economy framework built for
 
 Add a completely new drug with unique steps, locations, animations, and props in 30 minutes or less — no scripting required.
 
+### Purchase Here: [core-forge.tebex.io](https://core-forge.tebex.io/package/7497769)
+
 ---
 
 ## Requirements
@@ -27,6 +29,8 @@ Add a completely new drug with unique steps, locations, animations, and props in
 - [ox_inventory](https://github.com/overextended/ox_inventory)
 - [ox_lib](https://github.com/overextended/ox_lib)
 - [ox_target](https://github.com/overextended/ox_target)
+- [oxmysql](https://github.com/overextended/oxmysql)
+- Any Minigame Pack (Optional) — Preconfigured to use [glitch-minigames](https://github.com/Gl1tchStudios/glitch-minigames)
 - QBCore / ESX / QBox
 
 ---
